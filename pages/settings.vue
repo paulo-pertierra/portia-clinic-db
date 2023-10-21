@@ -15,11 +15,6 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-  middleware: [
-    "auth"
-  ]
-})
 import { getAuth, signOut } from 'firebase/auth';
 const auth = getAuth();
 const ionRouter = useIonRouter();

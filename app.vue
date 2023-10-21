@@ -1,5 +1,6 @@
 <template>
-  <ion-app class="max-w-xl mx-auto">
+  <div class="w-screen h-screen bg-gray-200">
+    <ion-app class="max-w-4xl mx-auto">
     <ion-menu content-id="main-content" menu-id="side-menu">
       <ion-header>
         <ion-toolbar>
@@ -55,6 +56,7 @@
     </ion-menu>
     <ion-router-outlet id="main-content" />
   </ion-app>
+  </div>
 </template>
 
 <script lang="ts" setup>

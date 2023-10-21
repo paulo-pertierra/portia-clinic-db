@@ -38,7 +38,7 @@
       </ion-card>
     </ion-content>
 
-    <ion-fab slot="fixed" vertical="bottom" horizontal="end" @click="ionRouter.push()">
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" @click="ionRouter.push('/patient/form')">
       <ion-fab-button>
         <ion-icon :icon="ioniconsAdd"></ion-icon>
       </ion-fab-button>
