@@ -1,13 +1,35 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
-  </ion-page>
+    <ion-content class="ion-padding">
+      <div class="h-full flex items-center pb-20">
+        <div class="w-full">
+          <h1 class="text-center pb-8">Log in to Clinic DB</h1>
+          <div class="w-3/4 mx-auto">
+            <ion-input v-model="username" id="username" label="User Name" label-placement="floating" :counter="true"
+              maxlength="32" />
+            <ion-input v-model="password" type="password" id="username" label="Password" label-placement="floating"
+              :counter="true" maxlength="32" />
+            <ion-button @click="signInAndRedirect()" size="large" class="w-full my-8">
+              Log In </ion-button>
+          </div>
+        </div>
+      </div>
+    </ion-content>
 </template>
+
+<script lang="ts" setup>
+const ionRouter = useIonRouter();
+definePageMeta({
+  middleware: [
+    "auth"
+  ]
+})
+
+import { signInWithEmailAndPassword } from "firebase/auth";
+const auth = useFirebaseAuth()!;
+const username = ref("");
+const password = ref("");
+async function signInAndRedirect() {
+  await signInWithEmailAndPassword(auth, username.value, password.value);
+  ionRouter.push("/home")
+}
+</script>

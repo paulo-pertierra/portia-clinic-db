@@ -1,5 +1,5 @@
 <template>
-  <ion-app v-if="true" class="max-w-xl mx-auto">
+  <ion-app class="max-w-xl mx-auto">
     <ion-menu content-id="main-content" menu-id="side-menu">
       <ion-header>
         <ion-toolbar>
@@ -8,7 +8,7 @@
       </ion-header>
       <ion-content class="ion-padding">
         <button
-          @click="ionNavigateTo(`/`)"
+          @click="ionNavigateTo(`/home`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
           <ion-icon
@@ -24,13 +24,13 @@
         >
           <ion-icon
             class="w-6 h-6 aspect-square flex items-center justify-center"
-            :icon="ioniconsPersonSharp"
+            :icon="ioniconsPeopleSharp"
           />
           <span class="pl-4">Patients</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
         <button
-          @click="ionNavigateTo(`/patients`)"
+          @click="ionNavigateTo(`/documents`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
           <ion-icon
@@ -41,57 +41,45 @@
           <ion-ripple-effect></ion-ripple-effect>
         </button>
         <button
-          @click="ionNavigateTo(`/`)"
+          @click="ionNavigateTo(`/settings`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
           <ion-icon
             class="w-6 h-6 aspect-square flex items-center justify-center"
             :icon="ioniconsSettingsSharp"
           />
-          <span class="pl-4">My Settings</span>
+          <span class="pl-4">Settings</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content" />
   </ion-app>
-  <ion-app v-if="false" class="max-w-xl mx-auto">
-    <ion-content class="ion-padding">
-      <div class="h-full flex items-center pb-20">
-        <div class="w-full">
-          <h1 class="text-center pb-8">Log in to Clinic DB</h1>
-          <div class="w-3/4 mx-auto">
-            <ion-input
-              id="username"
-              label="User Name"
-              label-placement="floating"
-              :counter="true"
-              maxlength="32"
-            />
-            <ion-input
-              id="username"
-              label="User Name"
-              label-placement="floating"
-              :counter="true"
-              maxlength="32"
-            />
-            <ion-button size="large" class="w-full my-8"> Log In </ion-button>
-          </div>
-        </div>
-      </div>
-    </ion-content>
-  </ion-app>
 </template>
 
 <script lang="ts" setup>
-import "./ionic.styles";
+/* Core CSS required for Ionic components to work properly */
+import "@ionic/vue/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+import "@ionic/vue/css/normalize.css";
+import "@ionic/vue/css/structure.css";
+import "@ionic/vue/css/typography.css";
+
+/* Optional CSS utils that can be commented out */
+import "@ionic/vue/css/padding.css";
+import "@ionic/vue/css/float-elements.css";
+import "@ionic/vue/css/text-alignment.css";
+import "@ionic/vue/css/text-transformation.css";
+import "@ionic/vue/css/flex-utils.css";
+import "@ionic/vue/css/display.css";
+
 
 import { UseIonRouterResult } from "./types";
+
 const ionRouter: UseIonRouterResult = useIonRouter();
 async function ionNavigateTo(link: string) {
   await menuController.close("side-menu");
   ionRouter.push(link);
 }
-
-async function firebaseLogin() {}
 </script>

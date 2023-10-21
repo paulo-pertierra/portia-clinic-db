@@ -31,6 +31,9 @@
     "@capacitor/core": "5.5.0",
     "@capacitor/haptics": "5.0.6",
     "@capacitor/keyboard": "5.0.6",
-    "@capacitor/status-bar": "5.0.6"
+    "@capacitor/status-bar": "5.0.6",
+    "firebase": "^10.5.0",
+    "nuxt-vuefire": "^0.4.0",
+    "vuefire": "^3.1.17"
   }
 }

@@ -37,16 +37,27 @@
         </ion-card-content>
       </ion-card>
     </ion-content>
+
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" @click="ionRouter.push()">
+      <ion-fab-button>
+        <ion-icon :icon="ioniconsAdd"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+
   </ion-page>
 </template>
 
 <script lang="ts" setup>
+import { UseIonRouterResult } from '~/types';
+
 // Patient Sorter
 const patientSortBy = ref("last_name");
 
 function handleIonSelectChange(event: CustomEvent) {
   console.log(event.detail.value);
 }
+
+// Patients data hardcoded
 
 const patients = [
   {
@@ -66,4 +77,6 @@ const patients = [
     image: "https://i.pravatar.cc/300?img=45",
   },
 ];
+
+const ionRouter:UseIonRouterResult = useIonRouter();
 </script>
