@@ -11,11 +11,7 @@
           @click="ionNavigateTo(`/`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
-          <img
-            class="w-6 h-6 aspect-square flex items-center justify-center"
-            src="https://placehold.co/50"
-            alt=""
-          />
+          <ion-icon class="w-6 h-6 aspect-square flex items-center justify-center" :icon="ioniconsHomeSharp" />
           <span class="pl-4">Home</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
@@ -23,23 +19,15 @@
           @click="ionNavigateTo(`/patients`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
-          <img
-            class="w-6 h-6 aspect-square flex items-center justify-center"
-            src="https://placehold.co/50"
-            alt=""
-          />
+        <ion-icon class="w-6 h-6 aspect-square flex items-center justify-center" :icon="ioniconsPersonSharp" />
           <span class="pl-4">Patients</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
         <button
-          @click="ionNavigateTo(`/`)"
+          @click="async () => await menuController.close('app-menu')"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
-          <img
-            class="w-6 h-6 aspect-square flex items-center justify-center"
-            src="https://placehold.co/50"
-            alt=""
-          />
+        <ion-icon class="w-6 h-6 aspect-square flex items-center justify-center" :icon="ioniconsDocumentsSharp" />
           <span class="pl-4">Documents</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
@@ -47,11 +35,7 @@
           @click="ionNavigateTo(`/`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
-          <img
-            class="w-6 h-6 aspect-square flex items-center justify-center"
-            src="https://placehold.co/50"
-            alt=""
-          />
+          <ion-icon class="w-6 h-6 aspect-square flex items-center justify-center" :icon="ioniconsSettingsSharp" />
           <span class="pl-4">My Settings</span>
           <ion-ripple-effect></ion-ripple-effect>
         </button>
