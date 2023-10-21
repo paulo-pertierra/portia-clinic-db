@@ -93,7 +93,5 @@ async function ionNavigateTo(link: string) {
   ionRouter.push(link);
 }
 
-async function firebaseLogin() {
-  
-}
+async function firebaseLogin() {}
 </script>

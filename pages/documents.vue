@@ -18,7 +18,7 @@
         </ion-card-header>
         <ion-card-content>
           <ion-list>
-            <documents-list v-for="patient in patients" :patient="patient"/>
+            <documents-list v-for="patient in patients" :patient="patient" />
           </ion-list>
         </ion-card-content>
       </ion-card>

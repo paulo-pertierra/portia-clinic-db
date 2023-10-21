@@ -12,7 +12,7 @@
     <ion-content class="ion-padding">
       <ion-card>
         <div class="w-full py-4">
-          <img class="w-36 h-36 aspect-square mx-auto rounded-full" src="https://placehold.co/500" alt="">
+          <img class="w-36 h-36 aspect-square mx-auto rounded-full" src="https://placehold.co/500" alt="" />
         </div>
         <ion-card-header>
           <ion-card-title class="text-center">Name of the Patient</ion-card-title>
@@ -38,12 +38,10 @@
         <ion-card v-for="i in 10">
           <ion-card-header>
             <ion-card-title>Desirous of Contraceptive</ion-card-title>
-            <ion-card-subtitle>{{ '4:00pm Tuesday, January 20, 2023' }}</ion-card-subtitle>
+            <ion-card-subtitle>{{ "4:00pm Tuesday, January 20, 2023" }}</ion-card-subtitle>
           </ion-card-header>
 
-          <ion-card-content>
-            Click on the card to view more details.
-          </ion-card-content>
+          <ion-card-content> Click on the card to view more details. </ion-card-content>
         </ion-card>
       </div>
     </ion-content>
@@ -51,5 +49,5 @@
 </template>
 
 <script lang="ts" setup>
-const patientSegment = ref("personal")
+const patientSegment = ref("personal");
 </script>

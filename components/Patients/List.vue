@@ -3,28 +3,32 @@
     <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
       <img class="rounded-full" alt="" :src="patient.image" />
     </ion-thumbnail>
-    <ion-label @click="goToPatient(patient.id)">{{ patient.fullName }}
-      <span class="text-xs block">added {{ "four years ago" }}</span></ion-label>
+    <ion-label @click="goToPatient(patient.id)"
+      >{{ patient.fullName }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
+    >
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
       <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
     </button>
-    <ion-action-sheet :trigger="`patient-${patient.id}-action-sheet`" header="Actions"
-      :buttons="patientActionSheetButtons" @didDismiss="handleActionSheetEvent($event)"></ion-action-sheet>
+    <ion-action-sheet
+      :trigger="`patient-${patient.id}-action-sheet`"
+      header="Actions"
+      :buttons="patientActionSheetButtons"
+      @didDismiss="handleActionSheetEvent($event)"
+    ></ion-action-sheet>
   </ion-item>
 </template>
 
 <script lang="ts" setup>
-
 defineProps<{
   patient: {
-    id: string,
-    lastName: string,
-    firstName: string,
-    middleName: string,
-    fullName: string,
-    image: string,
-  }
+    id: string;
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    fullName: string;
+    image: string;
+  };
 }>();
 
 import { UseIonRouterResult } from "~/types";

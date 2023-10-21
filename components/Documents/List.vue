@@ -8,8 +8,12 @@
     <button :id="`patient-${patient.id}-action-sheet`">
       <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
     </button>
-    <ion-action-sheet :trigger="`patient-${patient.id}-action-sheet`" header="Actions"
-      :buttons="patientActionSheetButtons" @didDismiss="handleActionSheetEvent($event)"></ion-action-sheet>
+    <ion-action-sheet
+      :trigger="`patient-${patient.id}-action-sheet`"
+      header="Actions"
+      :buttons="patientActionSheetButtons"
+      @didDismiss="handleActionSheetEvent($event)"
+    ></ion-action-sheet>
   </ion-item>
 </template>
 
@@ -24,14 +28,14 @@ function handleActionSheetEvent(event: Event & { detail: { data: { action: strin
 
 defineProps<{
   patient: {
-    id: string,
-    lastName: string,
-    firstName: string,
-    middleName: string,
-    fullName: string,
-    image: string,
-  }
-}>()
+    id: string;
+    lastName: string;
+    firstName: string;
+    middleName: string;
+    fullName: string;
+    image: string;
+  };
+}>();
 
 const ionRouter: UseIonRouterResult = useIonRouter();
 const goToPatient = (id: string) => ionRouter.push(`/patients/${id}`);
