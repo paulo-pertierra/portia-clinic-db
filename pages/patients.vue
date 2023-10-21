@@ -18,17 +18,11 @@
         </ion-card-header>
         <ion-card-content>
           <ion-list>
-            <ion-item
-              v-for="patient in patients"
-              class="relative ion-activatable"
-              :ref="patient.id"
-            >
+            <ion-item v-for="patient in patients" class="relative ion-activatable" :ref="patient.id">
               <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
                 <img class="rounded-full" alt="" :src="patient.image" />
               </ion-thumbnail>
-              <ion-label @click="goToPatient(patient.id)">{{
-                patient.fullName
-              }}</ion-label>
+              <ion-label @click="goToPatient(patient.id)">{{ patient.fullName }}</ion-label>
               <ion-ripple-effect></ion-ripple-effect>
               <button :id="`patient-${patient.id}-action-sheet`">
                 <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
@@ -50,9 +44,7 @@
 <script lang="ts" setup>
 import { UseIonRouterResult } from "~/types";
 
-function handleActionSheetEvent(
-  event: Event & { detail: { data: { action: string } } },
-) {
+function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }) {
   if (event.detail.data) {
     console.log(event.detail.data.action);
   }
