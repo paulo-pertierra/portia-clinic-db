@@ -1,5 +1,5 @@
 <template>
-  <ion-app class="max-w-xl mx-auto">
+  <ion-app v-if="false" class="max-w-xl mx-auto">
     <ion-menu content-id="main-content" menu-id="side-menu">
       <ion-header>
         <ion-toolbar>
@@ -54,6 +54,33 @@
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content" />
+  </ion-app>
+  <ion-app v-if="true" class="max-w-xl mx-auto">
+    <ion-content class="ion-padding">
+      <div class="h-full flex items-center pb-20">
+        <div class="w-full">
+          <h1 class="text-center pb-8">Log in to Clinic DB</h1>
+      <div class="w-3/4 mx-auto">
+        <ion-input 
+        id="username"
+        label="User Name"
+        label-placement="floating"
+        :counter="true"
+        maxlength="32"
+      />
+      <ion-input 
+        id="password"
+        type="password"
+        label="Password"
+        label-placement="floating"
+      />
+      <ion-button class="w-full">
+        Log In
+      </ion-button>
+      </div>
+        </div>
+      </div>
+    </ion-content>
   </ion-app>
 </template>
 
