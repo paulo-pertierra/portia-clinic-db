@@ -1,5 +1,5 @@
 <template>
-  <ion-app v-if="false" class="max-w-xl mx-auto">
+  <ion-app v-if="true" class="max-w-xl mx-auto">
     <ion-menu content-id="main-content" menu-id="side-menu">
       <ion-header>
         <ion-toolbar>
@@ -55,7 +55,7 @@
     </ion-menu>
     <ion-router-outlet id="main-content" />
   </ion-app>
-  <ion-app v-if="true" class="max-w-xl mx-auto">
+  <ion-app v-if="false" class="max-w-xl mx-auto">
     <ion-content class="ion-padding">
       <div class="h-full flex items-center pb-20">
         <div class="w-full">
@@ -68,8 +68,14 @@
               :counter="true"
               maxlength="32"
             />
-            <ion-input id="password" type="password" label="Password" label-placement="floating" />
-            <ion-button class="w-full"> Log In </ion-button>
+            <ion-input
+              id="username"
+              label="User Name"
+              label-placement="floating"
+              :counter="true"
+              maxlength="32"
+            />
+            <ion-button size="large" class="w-full my-8"> Log In </ion-button>
           </div>
         </div>
       </div>
@@ -85,5 +91,9 @@ const ionRouter: UseIonRouterResult = useIonRouter();
 async function ionNavigateTo(link: string) {
   await menuController.close("side-menu");
   ionRouter.push(link);
+}
+
+async function firebaseLogin() {
+  
 }
 </script>

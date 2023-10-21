@@ -11,29 +11,14 @@
     <ion-content class="ion-padding">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Your Patients</ion-card-title>
+          <ion-card-title>Documents</ion-card-title>
           <ion-card-subtitle>
             <ion-searchbar></ion-searchbar>
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <ion-list>
-            <ion-item v-for="patient in patients" class="relative ion-activatable" :ref="patient.id">
-              <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
-                <img class="rounded-full" alt="" :src="patient.image" />
-              </ion-thumbnail>
-              <ion-label @click="goToPatient(patient.id)">{{ patient.fullName }}</ion-label>
-              <ion-ripple-effect></ion-ripple-effect>
-              <button :id="`patient-${patient.id}-action-sheet`">
-                <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
-              </button>
-              <ion-action-sheet
-                :trigger="`patient-${patient.id}-action-sheet`"
-                header="Actions"
-                :buttons="patientActionSheetButtons"
-                @didDismiss="handleActionSheetEvent($event)"
-              ></ion-action-sheet>
-            </ion-item>
+            <documents-list v-for="patient in patients" :patient="patient"/>
           </ion-list>
         </ion-card-content>
       </ion-card>
@@ -42,46 +27,6 @@
 </template>
 
 <script lang="ts" setup>
-import { UseIonRouterResult } from "~/types";
-
-function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }) {
-  if (event.detail.data) {
-    console.log(event.detail.data.action);
-  }
-}
-
-const ionRouter: UseIonRouterResult = useIonRouter();
-const goToPatient = (id: string) => ionRouter.push(`/patients/${id}`);
-
-const patientActionSheetButtons = [
-  {
-    text: "Edit",
-    data: {
-      action: "edit",
-    },
-  },
-  {
-    text: "Share",
-    data: {
-      action: "share",
-    },
-  },
-  {
-    text: "Delete",
-    role: "destructive",
-    data: {
-      action: "delete",
-    },
-  },
-  {
-    text: "Cancel",
-    role: "cancel",
-    data: {
-      action: "cancel",
-    },
-  },
-];
-
 const patients = [
   {
     id: "12345",
