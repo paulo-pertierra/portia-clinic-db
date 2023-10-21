@@ -4,13 +4,13 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "format": "prettier --write .",
-    "git:commit": "git add -A && git-cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "git:commit": "git add -A && git-cz"
   },
   "devDependencies": {
     "@capacitor/cli": "5.5.0",

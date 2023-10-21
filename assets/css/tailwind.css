@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer no-outline {
+  * {
+    outline: none;
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <ion-app class="max-w-xl mx-auto">
-    <ion-menu content-id="main-content" menu-id="app-menu">
+    <ion-menu content-id="main-content" menu-id="side-menu">
       <ion-header>
         <ion-toolbar>
           <ion-title>Documents</ion-title>
@@ -30,7 +30,7 @@
           <ion-ripple-effect></ion-ripple-effect>
         </button>
         <button
-          @click="async () => await menuController.close('app-menu')"
+          @click="ionNavigateTo(`/patients`)"
           class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
         >
           <ion-icon
@@ -63,7 +63,7 @@ import "./ionic.styles";
 import { UseIonRouterResult } from "./types";
 const ionRouter: UseIonRouterResult = useIonRouter();
 async function ionNavigateTo(link: string) {
+  await menuController.close("side-menu");
   ionRouter.push(link);
-  await menuController.close("app-menu");
 }
 </script>
