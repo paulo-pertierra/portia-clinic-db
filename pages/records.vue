@@ -27,22 +27,5 @@
 </template>
 
 <script lang="ts" setup>
-const patients = [
-  {
-    id: "12345",
-    lastName: "Flint",
-    firstName: "Maria",
-    middleName: "Bonnington",
-    fullName: "Flint, Maria Bonnington",
-    image: "https://i.pravatar.cc/300?img=36",
-  },
-  {
-    id: "12347",
-    lastName: "Morrison",
-    firstName: "Chandre",
-    middleName: "Lee",
-    fullName: "Morrison, Chandre Lee",
-    image: "https://i.pravatar.cc/300?img=45",
-  },
-];
+
 </script>

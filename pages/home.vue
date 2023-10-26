@@ -13,4 +13,9 @@
 </template>
 
 <script lang="ts" setup>
+import { recordsRef } from "~/services/firebase";
+const records = useCollection(recordsRef);
+
+console.log(records);
+
 </script>

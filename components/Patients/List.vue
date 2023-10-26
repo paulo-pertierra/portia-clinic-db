@@ -1,10 +1,10 @@
 <template>
   <ion-item class="relative ion-activatable" :ref="patient.id">
     <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
-      <img class="rounded-full" alt="" :src="patient.image" />
+      <img class="rounded-full" alt="" :src="'https://placehold.co/50'" />
     </ion-thumbnail>
     <ion-label @click="goToPatient(patient.id)"
-      >{{ patient.fullName }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
+      >{{ getFullName(patient.first_name, patient.last_name) }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
     >
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
@@ -21,19 +21,15 @@
 
 <script lang="ts" setup>
 defineProps<{
-  patient: {
-    id: string;
-    lastName: string;
-    firstName: string;
-    middleName: string;
-    fullName: string;
-    image: string;
-  };
+  patient: Patient
 }>();
 
 import { UseIonRouterResult } from "~/types";
+import { Patient } from "~/types/patient";
 const ionRouter: UseIonRouterResult = useIonRouter();
 const goToPatient = (id: string) => ionRouter.push(`/patient/${id}`);
+
+const getFullName = (firstName: string, lastName: string) => firstName + " " + lastName;
 
 // Options Menu
 const patientActionSheetButtons = [

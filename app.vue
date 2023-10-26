@@ -78,7 +78,6 @@ import "@ionic/vue/css/display.css";
 
 
 import { UseIonRouterResult } from "./types";
-
 const ionRouter: UseIonRouterResult = useIonRouter();
 async function ionNavigateTo(link: string) {
   await menuController.close("side-menu");
