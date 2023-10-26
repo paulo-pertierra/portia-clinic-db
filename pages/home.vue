@@ -8,13 +8,13 @@
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
+    <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu.    {{ records }} </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { recordsRef } from "~/services/firebase";
-const records = useCollection(recordsRef);
+import { specDoc } from "~/services/firebase";
+const records = useDocument(specDoc);
 
 console.log(records);
 
