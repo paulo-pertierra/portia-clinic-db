@@ -144,6 +144,14 @@
 </template>
 
 <script lang="ts" setup>
+const route = useRoute();
+
+const query = ref("");
+
+onMounted(() => {
+  query.value = route.query.patient_id as string;
+})
+
 import type { Patient } from "~/types/patient"
 const patientDraft: Ref<Patient> = ref({
   last_name: "",
