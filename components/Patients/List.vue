@@ -1,10 +1,10 @@
 <template>
   <ion-item class="relative ion-activatable" :ref="patient.id">
-    <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
+    <ion-thumbnail slot="start" @click="goToPatient(patient.id!)">
       <img class="rounded-full" alt="" :src="'https://placehold.co/50'" />
     </ion-thumbnail>
-    <ion-label @click="goToPatient(patient.id)"
-      >{{ getFullName(patient.first_name, patient.last_name) }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
+    <ion-label @click="goToPatient(patient.id!)"
+      >{{ getFullName(patient.first_name!, patient.last_name!) }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
     >
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
