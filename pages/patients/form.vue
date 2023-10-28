@@ -32,7 +32,7 @@
       <ion-accordion-group>
         <ion-accordion value="birthday-datetime-picker">
           <ion-item slot="header">
-            <ion-label>Birth Day: {{ patientDraft.date_of_birth? $dayjs(patientDraft.date_of_birth).format("MMMM DD, YYYY") : "No birthday set" }}</ion-label>
+            <ion-label>Birth Day: {{ patientDraft.date_of_birth? $dayjs(patientDraft.date_of_birth as unknown as string).format("MMMM DD, YYYY") : "No birthday set" }}</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
             <ion-datetime class="w-full" presentation="date" v-model="patientDraft.date_of_birth" />
@@ -227,7 +227,7 @@ const updatePatientDocument = () => {
   const updatedPatientDoc = {
     ...rest,
     updated_at: Timestamp.fromDate(new Date()),
-    date_of_birth: patientDraft.value.date_of_birth ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth)) : "",
+    date_of_birth: patientDraft.value.date_of_birth ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth as unknown as string)) : "",
     date_of_marriage: patientDraft.value.date_of_marriage ? Timestamp.fromDate(new Date(patientDraft.value.date_of_marriage)) : ""
   }
   updateDoc(patientDocRefById(patientId.value), updatedPatientDoc).then(() => {
@@ -239,8 +239,8 @@ const createPatientDocument = () => {
   const newPatientDoc = {
     ...patientDraft.value,
     created_at: Timestamp.fromDate(new Date()),
-    date_of_birth: patientDraft.value.date_of_birth ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth)) : "",
-    date_of_marriage: patientDraft.value.date_of_marriage ? Timestamp.fromDate(new Date(patientDraft.value.date_of_marriage)) : ""
+    date_of_birth: patientDraft.value.date_of_birth ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth as unknown as string)) : "",
+    date_of_marriage: patientDraft.value.date_of_marriage ? Timestamp.fromDate(new Date(patientDraft.value.date_of_marriage as unknown as string)) : ""
   }
   addDoc(patientColRef, newPatientDoc).then(() => {
     navigateTo(`/patients`);

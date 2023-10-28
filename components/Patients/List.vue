@@ -17,6 +17,9 @@
       @didDismiss="handleActionSheetEvent($event, patient.id!)"
     ></ion-action-sheet>
   </ion-item>
+  <ion-modal>
+
+  </ion-modal>
 </template>
 
 <script lang="ts" setup>
@@ -24,9 +27,12 @@ defineProps<{
   patient: Patient
 }>();
 
+import { deleteDoc } from "firebase/firestore";
 import { useFriendlyDate } from "~/composables/useFriendlyDate";
+import { patientDocRefById } from "~/services/firebase";
 import { UseIonRouterResult } from "~/types";
 import { Patient } from "~/types/patient";
+
 const ionRouter: UseIonRouterResult = useIonRouter();
 const goToPatient = (id: string) => ionRouter.push(`/patients/${id}`);
 
@@ -62,7 +68,8 @@ const patientActionSheetButtons = [
   },
 ];
 
-function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
+async function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
+  if (!event.detail.data) return;
   if (event.detail.data.action === 'edit') {
     navigateTo({
       path: "/patients/form",
@@ -70,6 +77,9 @@ function handleActionSheetEvent(event: Event & { detail: { data: { action: strin
         id
       }
     });
+  }
+  if (event.detail.data.action === 'delete') {
+    await deleteDoc(patientDocRefById(id));
   }
 }
 

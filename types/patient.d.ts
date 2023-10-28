@@ -8,7 +8,7 @@ export interface Patient {
   city?: string,
   civil_status?: string,
   contact_number?: string,
-  date_of_birth?: string,
+  date_of_birth?: Timestamp,
   date_of_marriage?: string,
   email_address?: string,
   family_history_allergy?: boolean,

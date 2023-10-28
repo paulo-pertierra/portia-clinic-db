@@ -15,14 +15,14 @@
           <img class="w-36 h-36 aspect-square mx-auto rounded-full" src="https://placehold.co/500" alt="" />
         </div>
         <ion-card-header>
-          <ion-card-title class="text-center">Name of the Patient</ion-card-title>
+          <ion-card-title class="text-center">{{ patient?.first_name + " " + patient?.middle_name?.charAt(0) + ". " + patient?.last_name }}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-          <p>Contact number: 0134123412</p>
-          <p>Address: asdfasdfasdf</p>
-          <p>Sex: 16 | Age: Female</p>
-          <p class="pt-4">Status: added yesterday, updated 4 minutes ago</p>
+          <p>Contact number: {{ patient?.contact_number}}</p>
+          <p>Address: {{ patient?.address }}</p>
+          <p>Sex: {{ patient?.sex }} | Age: {{ patient?.date_of_birth ? $dayjs(new Date()).diff(patient.date_of_birth.toDate(), "year") : "No age data" }}</p>
+          <p class="pt-4">Status: added {{ friendlyDate.formatFromTimestamp(patient?.created_at) }}, updated {{ friendlyDate.formatFromTimestamp(patient?.updated_at) }}</p>
         </ion-card-content>
       </ion-card>
       <ion-segment v-model="patientSegment">
@@ -50,4 +50,13 @@
 
 <script lang="ts" setup>
 const patientSegment = ref("personal");
+
+import { useRoute } from "vue-router";
+import { _RefFirestore } from "vuefire";
+import { patientDocRefById } from "~/services/firebase";
+import { Patient } from "~/types/patient";
+const route = useRoute();
+
+const patient: _RefFirestore<Patient | undefined> = useDocument(patientDocRefById(route.params.id as string));
+const friendlyDate = useFriendlyDate();
 </script>
