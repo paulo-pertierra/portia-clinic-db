@@ -47,6 +47,7 @@ export interface Patient {
   personal_social_env_history_cigarette?: boolean,
   personal_social_env_history_drugs?: boolean,
   religion?: string,
+  remarks?: string,
   sex?: string,
   state?: string
 }

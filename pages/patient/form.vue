@@ -5,7 +5,7 @@
         <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Patient Information Form</ion-title>
+        <ion-title>New Patient Form</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
@@ -128,6 +128,11 @@
           </div>
         </ion-accordion>
       </ion-accordion-group>
+
+      <h5>Remarks</h5>
+      <ion-item>
+        <ion-textarea v-model="patientDraft.remarks" placeholder="Enter additional information" />
+      </ion-item>
 
       <ion-button class="w-full py-8" size="medium">Add Patient</ion-button>
     </ion-content>

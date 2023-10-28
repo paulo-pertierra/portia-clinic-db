@@ -14,7 +14,7 @@
       :trigger="`patient-${patient.id}-action-sheet`"
       header="Actions"
       :buttons="patientActionSheetButtons"
-      @didDismiss="handleActionSheetEvent($event)"
+      @didDismiss="handleActionSheetEvent($event, patient.id!)"
     ></ion-action-sheet>
   </ion-item>
 </template>
@@ -61,9 +61,9 @@ const patientActionSheetButtons = [
   },
 ];
 
-function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }) {
+function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
   if (event.detail.data) {
-    console.log(event.detail.data.action);
+    console.log(event.detail.data.action, id);
   }
 }
 
