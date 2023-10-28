@@ -4,7 +4,7 @@
       <img class="rounded-full" alt="" :src="'https://placehold.co/50'" />
     </ion-thumbnail>
     <ion-label @click="goToPatient(patient.id!)"
-      >{{ getFullName(patient.first_name!, patient.last_name!) }} <span class="text-xs block">added {{ "four years ago" }}</span></ion-label
+      >{{ getFullName(patient.first_name!, patient.last_name!) }} <span class="text-xs block">added {{ friendlyDate.formatFromTimestamp(patient.created_at!) }}</span></ion-label
     >
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
@@ -24,10 +24,11 @@ defineProps<{
   patient: Patient
 }>();
 
+import { useFriendlyDate } from "~/composables/useFriendlyDate";
 import { UseIonRouterResult } from "~/types";
 import { Patient } from "~/types/patient";
 const ionRouter: UseIonRouterResult = useIonRouter();
-const goToPatient = (id: string) => ionRouter.push(`/patient/${id}`);
+const goToPatient = (id: string) => ionRouter.push(`/patients/${id}`);
 
 const getFullName = (firstName: string, lastName: string) => firstName + " " + lastName;
 
@@ -62,8 +63,13 @@ const patientActionSheetButtons = [
 ];
 
 function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
-  if (event.detail.data) {
-    console.log(event.detail.data.action, id);
+  if (event.detail.data.action === 'edit') {
+    navigateTo({
+      path: "/patients/form",
+      query: {
+        id
+      }
+    });
   }
 }
 
@@ -85,4 +91,6 @@ const patients = [
     image: "https://i.pravatar.cc/300?img=45",
   },
 ];
+
+const friendlyDate = useFriendlyDate();
 </script>

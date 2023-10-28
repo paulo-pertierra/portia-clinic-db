@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/ionic",
     "@nuxtjs/tailwindcss",
-    "nuxt-vuefire"
+    "nuxt-vuefire",
+    "dayjs-nuxt"
   ],
   ssr: false,
   devtools: { enabled: true },

@@ -43,3 +43,5 @@ export const specDoc = doc(db, "patient", "CPB03WrMyxt3sDEBryCj", "records", "8M
 
 // Even number kapag collection
 export const specCollection = collection(db, "patient", "CPB03WrMyxt3sDEBryCj", "records")
+
+export const patientDocRefById = (id: string) => doc(db, "patient", id);
