@@ -251,11 +251,4 @@ const submitPatientForm = () => {
   if (patientId.value) updatePatientDocument();
   if (!patientId.value) createPatientDocument();
 }
-
-const isMarriageModalOpen = ref(false);
-const isBirthdayModalOpen = ref(false);
-
-watch(patientDraft.value, () => {
-  console.table(patientDraft.value)
-})
 </script>
