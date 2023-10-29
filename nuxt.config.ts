@@ -15,6 +15,6 @@ export default defineNuxtConfig({
     auth: {
       enabled: true
     },
-    config: JSON.parse(process.env.FIREBASE_CONFIG as string)
-  }
+    config: JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG)
+  },
 });
