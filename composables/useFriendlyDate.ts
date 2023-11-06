@@ -12,5 +12,5 @@ export const useFriendlyDate = () => {
     if (!date) return "No data";
     return dayjs(date).fromNow();
   }
-  return { formatFromTimestamp, formatFromDate }
-}
+  return { formatFromTimestamp, formatFromDate };
+};

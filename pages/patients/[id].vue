@@ -12,17 +12,68 @@
     <ion-content class="ion-padding">
       <ion-card>
         <div class="w-full py-4">
-          <img class="w-36 h-36 aspect-square mx-auto rounded-full" src="https://placehold.co/500" alt="" />
+          <div class="relative w-fit mx-auto">
+            <img
+              class="w-36 h-36 aspect-square mx-auto rounded-full border"
+              :src="patient?.image ? patient?.image : defaultImage"
+              alt=""
+            />
+            <button
+              id="open-patient-image-modal"
+              @click="takePicture()"
+              class="absolute bottom-0 right-0 text-white text-xl bg-blue-400 rounded-full w-8 h-8 border "
+            >
+              <font-awesome-icon icon="fa-solid fa-pen" />
+            </button>
+            <!-- <ion-modal ref="modal" trigger="open-patient-image-modal" @willDismiss="onWillDismiss">
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button @click="cancel()">Cancel</ion-button>
+                  </ion-buttons>
+                  <ion-title>Change Patient Image</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                  <ion-item>
+                    <ion-input
+                    ref="input-patient-image"
+                    type="file"
+                    placeholder="Your name"
+                  ></ion-input>
+                  </ion-item>
+              </ion-content>
+            </ion-modal> -->
+          </div>
         </div>
         <ion-card-header>
-          <ion-card-title class="text-center">{{ patient?.first_name + " " + patient?.middle_name?.charAt(0) + ". " + patient?.last_name }}</ion-card-title>
+          <ion-card-title class="text-center">{{
+            patient?.first_name + " " + patient?.middle_name?.charAt(0) + ". " + patient?.last_name
+          }}</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
-          <p>Contact number: {{ patient?.contact_number}}</p>
+          <p>Contact number: {{ patient?.contact_number }}</p>
+          <p>Email address: {{ patient?.email_address }}</p>
           <p>Address: {{ patient?.address }}</p>
-          <p>Sex: {{ patient?.sex }} | Age: {{ patient?.date_of_birth ? $dayjs(new Date()).diff(patient.date_of_birth.toDate(), "year") : "No age data" }}</p>
-          <p class="pt-4">Status: added {{ friendlyDate.formatFromTimestamp(patient?.created_at) }}, updated {{ friendlyDate.formatFromTimestamp(patient?.updated_at) }}</p>
+          <p>Sex: {{ patient?.sex }}</p>
+          <p>
+            Age:
+            {{
+              patient?.date_of_birth
+                ? $dayjs(new Date()).diff(patient.date_of_birth.toDate(), "year")
+                : "No age data"
+            }}
+          </p>
+          <p class="pt-4">
+            Status: added {{ friendlyDate.formatFromTimestamp(patient?.created_at) }}.
+            <span v-if="patient?.updated_at"
+              >Updated {{ friendlyDate.formatFromTimestamp(patient?.updated_at) }}.</span
+            >
+          </p>
         </ion-card-content>
       </ion-card>
       <ion-segment v-model="patientSegment">
@@ -33,8 +84,8 @@
           <ion-label>Documents</ion-label>
         </ion-segment-button>
       </ion-segment>
-      <div class="w-full" v-if="patientSegment === 'personal'">Personal Info</div>
-      <div class="w-full" v-else>
+      <div class="w-full ion-padding" v-if="patientSegment === 'personal'"></div>
+      <div class="w-full ion-padding" v-else>
         <ion-card v-for="i in 10">
           <ion-card-header>
             <ion-card-title>Desirous of Contraceptive</ion-card-title>
@@ -51,12 +102,56 @@
 <script lang="ts" setup>
 const patientSegment = ref("personal");
 
+import { defineCustomElement } from "vue";
 import { useRoute } from "vue-router";
 import { _RefFirestore } from "vuefire";
 import { patientDocRefById } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 const route = useRoute();
 
-const patient: _RefFirestore<Patient | undefined> = useDocument(patientDocRefById(route.params.id as string));
+const patient: _RefFirestore<Patient | undefined> = useDocument(
+  patientDocRefById(route.params.id as string),
+) as any;
 const friendlyDate = useFriendlyDate();
+
+const defaultImage =
+  "https://firebasestorage.googleapis.com/v0/b/fernandez-clinic-dev.appspot.com/o/patients%2Fdefault-patient-img.jpg?alt=media&token=048e8e71-11d3-441f-8410-9ae97404c394&_gl=1*1xso72v*_ga*NzgwMTA4NjkuMTY5NTg3ODMzMw..*_ga_CW55HF8NVT*MTY5ODU2MzEwNi4xOS4xLjE2OTg1NjYyOTQuMjYuMC4w";
+
+
+const modal = ref();
+const input = ref();
+
+const cancel = () => modal.value.$el.dismiss(null, 'cancel');
+
+const confirm = () => {
+  const name = input.value.$el.value;
+  modal.value.$el.dismiss(name, 'confirm');
+};
+
+const onWillDismiss = (ev: CustomEvent<any>) => {
+};
+
+import { Camera, CameraResultType } from "@capacitor/camera";
+const takePicture = async () => {
+  const image = await Camera.getPhoto({
+    quality: 50,
+    allowEditing: true,
+    resultType: CameraResultType.Base64,
+  });
+
+  // image.webPath will contain a path that can be set as an image src.
+  // You can access the original file using image.path, which can be
+  // passed to the Filesystem API to read the raw data of the image,
+  // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+  var imageUrl = image.base64String!;
+
+  // Can be set to the src of an image now
+  imageElement.value = imageUrl;
+};
+
+const imageElement = ref("");
+
+watch(imageElement, () => {
+  console.log(imageElement.value)
+})
 </script>

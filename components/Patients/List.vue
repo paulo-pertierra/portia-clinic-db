@@ -4,7 +4,10 @@
       <img class="rounded-full" alt="" :src="'https://placehold.co/50'" />
     </ion-thumbnail>
     <ion-label @click="goToPatient(patient.id!)"
-      >{{ getFullName(patient.first_name!, patient.last_name!) }} <span class="text-xs block">added {{ friendlyDate.formatFromTimestamp(patient.created_at!) }}</span></ion-label
+      >{{ getFullName(patient.first_name!, patient.last_name!) }}
+      <span class="text-xs block"
+        >added {{ friendlyDate.formatFromTimestamp(patient.created_at!) }}</span
+      ></ion-label
     >
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
@@ -17,14 +20,12 @@
       @didDismiss="handleActionSheetEvent($event, patient.id!)"
     ></ion-action-sheet>
   </ion-item>
-  <ion-modal>
-
-  </ion-modal>
+  <ion-modal> </ion-modal>
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-  patient: Patient
+  patient: Patient;
 }>();
 
 import { deleteDoc } from "firebase/firestore";
@@ -70,15 +71,15 @@ const patientActionSheetButtons = [
 
 async function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
   if (!event.detail.data) return;
-  if (event.detail.data.action === 'edit') {
+  if (event.detail.data.action === "edit") {
     navigateTo({
       path: "/patients/form",
       query: {
-        id
-      }
+        id,
+      },
     });
   }
-  if (event.detail.data.action === 'delete') {
+  if (event.detail.data.action === "delete") {
     await deleteDoc(patientDocRefById(id));
   }
 }

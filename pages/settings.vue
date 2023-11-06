@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts" setup>
-import { getAuth, signOut } from 'firebase/auth';
+import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 const ionRouter = useIonRouter();
 const router = useRouter();
 
 async function signOutAndRedirect() {
   await signOut(auth);
-  router.go(0)
+  router.go(0);
 }
 </script>

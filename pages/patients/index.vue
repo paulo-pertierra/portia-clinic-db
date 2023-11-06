@@ -14,8 +14,13 @@
           <ion-card-title>Your Patients</ion-card-title>
           <ion-card-subtitle class="flex items-center">
             <ion-item class="w-full">
-              <ion-select class="w-40" label="Sort" label-placement="stacked" v-model="patientSortBy"
-                @ionChange="handleIonSelectChange($event)">
+              <ion-select
+                class="w-40"
+                label="Sort"
+                label-placement="stacked"
+                v-model="patientSortBy"
+                @ionChange="handleIonSelectChange($event)"
+              >
                 <ion-select-option value="last_name">Last Name</ion-select-option>
                 <ion-select-option value="first_name">First Name</ion-select-option>
                 <ion-select-option value="created_at">Date Created</ion-select-option>
@@ -41,15 +46,14 @@
         <ion-icon :icon="ioniconsAdd"></ion-icon>
       </ion-fab-button>
     </ion-fab>
-
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import type { _RefFirestore } from 'vuefire';
-import { patientColRef } from '~/services/firebase';
-import { UseIonRouterResult } from '~/types';
-import { Patient } from '~/types/patient';
+import type { _RefFirestore } from "vuefire";
+import { patientColRef } from "~/services/firebase";
+import { UseIonRouterResult } from "~/types";
+import { Patient } from "~/types/patient";
 
 // Patient Sorter
 const patientSortBy = ref("last_name");
@@ -90,8 +94,8 @@ interface InfiniteSCrollCustomEvent extends CustomEvent {
 
 const ioninfinite = (event: InfiniteSCrollCustomEvent) => {
   // getNextPatientsBatch();
-  setTimeout(() => event.target.complete(), 500)
-}
+  setTimeout(() => event.target.complete(), 500);
+};
 
 const ionRouter: UseIonRouterResult = useIonRouter();
 </script>

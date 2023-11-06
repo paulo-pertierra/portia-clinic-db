@@ -1,7 +1,7 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { collection, collectionGroup, doc, getFirestore, where } from 'firebase/firestore';
-import { query } from 'firebase/firestore';
+import { collection, collectionGroup, doc, getFirestore, where } from "firebase/firestore";
+import { query } from "firebase/firestore";
 
 const firebaseConfig = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
 const app = initializeApp(firebaseConfig);
@@ -24,24 +24,16 @@ export const recordsColGrpRef = collectionGroup(db, "records");
  * Queries Records of patients by their IDs.
  * @param patientId ID ng patient, inject mo sa patient.id
  */
-export const patientRecordColRefByPatientId = (patientId: string) => collection(db, "patient", patientId, "records");
+export const patientRecordColRefByPatientId = (patientId: string) =>
+  collection(db, "patient", patientId, "records");
 
 /**
- * 
+ *
  * @param patientId ID ng patient, inject mo sa patient.id
  * @param type "desirous_of_contraception", "abnormal_menstruation", "general_remarks", "infertility_workup"
  */
-export const patientRecordColRefByPatientIdAndType = (patientId: string, type: string) => query(
-  patientRecordColRefByPatientId(patientId),
-  where("type", "==", type)
-)
-
-// Document or Collection Reference
-
-// Odd number lagi kapag document, kasama si Firestore db variable
-export const specDoc = doc(db, "patient", "CPB03WrMyxt3sDEBryCj", "records", "8MFyKLzXWbR2OS8C57Gs");
-
-// Even number kapag collection
-export const specCollection = collection(db, "patient", "CPB03WrMyxt3sDEBryCj", "records")
+export const patientRecordColRefByPatientIdAndType = (patientId: string, type: string) =>
+  query(patientRecordColRefByPatientId(patientId), where("type", "==", type));
 
 export const patientDocRefById = (id: string) => doc(db, "patient", id);
+
