@@ -31,7 +31,7 @@
             <ion-ripple-effect></ion-ripple-effect>
           </button>
           <button
-            @click="ionNavigateTo(`/documents`)"
+            @click="ionNavigateTo(`/records`)"
             class="w-full px-4 py-3 text-left flex items-center ion-activatable overflow-hidden relative select-none"
           >
             <ion-icon

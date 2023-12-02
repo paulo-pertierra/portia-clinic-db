@@ -36,6 +36,7 @@ export interface Patient {
     uti?: boolean;
   };
   first_name?: string;
+  full_name?: string;
   image?: string;
   last_name?: string;
   medical_history: {

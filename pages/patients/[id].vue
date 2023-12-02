@@ -19,34 +19,11 @@
               alt=""
             />
             <button
-              id="open-patient-image-modal"
               @click="takePicture()"
               class="absolute bottom-0 right-0 text-white text-xl bg-blue-400 rounded-full w-8 h-8 border "
             >
               <font-awesome-icon icon="fa-solid fa-pen" />
             </button>
-            <!-- <ion-modal ref="modal" trigger="open-patient-image-modal" @willDismiss="onWillDismiss">
-              <ion-header>
-                <ion-toolbar>
-                  <ion-buttons slot="start">
-                    <ion-button @click="cancel()">Cancel</ion-button>
-                  </ion-buttons>
-                  <ion-title>Change Patient Image</ion-title>
-                  <ion-buttons slot="end">
-                    <ion-button :strong="true" @click="confirm()">Confirm</ion-button>
-                  </ion-buttons>
-                </ion-toolbar>
-              </ion-header>
-              <ion-content class="ion-padding">
-                  <ion-item>
-                    <ion-input
-                    ref="input-patient-image"
-                    type="file"
-                    placeholder="Your name"
-                  ></ion-input>
-                  </ion-item>
-              </ion-content>
-            </ion-modal> -->
           </div>
         </div>
         <ion-card-header>
@@ -80,13 +57,13 @@
         <ion-segment-button value="personal">
           <ion-label>Personal</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="documents">
-          <ion-label>Documents</ion-label>
+        <ion-segment-button value="records">
+          <ion-label>Records</ion-label>
         </ion-segment-button>
       </ion-segment>
       <div class="w-full ion-padding" v-if="patientSegment === 'personal'"></div>
       <div class="w-full ion-padding" v-else>
-        <ion-card v-for="i in 10">
+        <ion-card v-for="i in 2">
           <ion-card-header>
             <ion-card-title>Desirous of Contraceptive</ion-card-title>
             <ion-card-subtitle>{{ "4:00pm Tuesday, January 20, 2023" }}</ion-card-subtitle>
@@ -96,13 +73,19 @@
         </ion-card>
       </div>
     </ion-content>
+    <ion-fab v-if="patientSegment === 'records'" slot="fixed" vertical="bottom" horizontal="end" @click="ionRouter.push(`/patients/record?id=${patient?.id}`)">
+      <ion-fab-button>
+        <ion-icon :icon="ioniconsAdd"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-const patientSegment = ref("personal");
+const patientSegment = ref<"personal" | "records">("personal");
 
-import { defineCustomElement } from "vue";
+const ionRouter = useIonRouter();
+
 import { useRoute } from "vue-router";
 import { _RefFirestore } from "vuefire";
 import { patientDocRefById } from "~/services/firebase";

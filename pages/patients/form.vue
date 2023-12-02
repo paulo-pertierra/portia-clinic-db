@@ -14,13 +14,6 @@
       <h5>Name</h5>
       <ion-item>
         <ion-input
-          v-model="patientDraft.last_name"
-          label="Last Name"
-          placeholder="Enter last name"
-        ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input
           v-model="patientDraft.first_name"
           label="First Name"
           placeholder="Enter first name"
@@ -31,6 +24,13 @@
           v-model="patientDraft.middle_name"
           label="Middle Name"
           placeholder="Enter middle name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          v-model="patientDraft.last_name"
+          label="Last Name"
+          placeholder="Enter last name"
         ></ion-input>
       </ion-item>
 
@@ -380,6 +380,7 @@ import { db, patientColRef, patientDocRefById } from "~/services/firebase";
 import type { Patient } from "~/types/patient";
 
 const patientDraft: Ref<Patient> = ref({
+  sex: "female",
   environment_history: {},
   family_history: {},
   medical_history: {},
@@ -395,6 +396,7 @@ onIonViewWillEnter(async () => {
 
 const resetPatientForm = () => {
   patientDraft.value = {
+    sex: "female",
     environment_history: {},
     family_history: {},
     medical_history: {},
@@ -421,7 +423,7 @@ const autoFillPatientForm = (data: globalThis.Ref) => {
   };
 };
 
-const updatePatientDocument = () => {
+const updatePatientDocument = async () => {
   const { id, ...rest } = patientDraft.value;
   const updatedPatientDoc = {
     ...rest,
@@ -433,14 +435,17 @@ const updatePatientDocument = () => {
       ? Timestamp.fromDate(new Date(patientDraft.value.date_of_marriage))
       : "",
   };
-  updateDoc(patientDocRefById(patientId.value), updatedPatientDoc).then(() => {
-    navigateTo(`/patients/${patientId.value}`);
+  console.log(patientId.value);
+  await updateDoc(patientDocRefById(patientId.value), updatedPatientDoc)
+    .then(() => {
   });
+  navigateTo(`/patients/${ patientId.value }`);
 };
 
 const createPatientDocument = () => {
   const newPatientDoc = {
     ...patientDraft.value,
+    full_name: patientDraft.value.first_name + " " + patientDraft.value.middle_name + " " + patientDraft.value.last_name,
     created_at: Timestamp.fromDate(new Date()),
     date_of_birth: patientDraft.value.date_of_birth
       ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth as unknown as string))
@@ -457,7 +462,6 @@ const createPatientDocument = () => {
 const submitPatientForm = () => {
   if (patientId.value) {
     updatePatientDocument();
-    navigateTo("")
   };
   if (!patientId.value) createPatientDocument();
 };
