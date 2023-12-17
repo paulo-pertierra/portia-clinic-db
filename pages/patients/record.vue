@@ -50,9 +50,13 @@ import { _RefFirestore } from 'vuefire';
 import { patientDocRefById } from '~/services/firebase';
 import { Patient } from '~/types/patient';
 import { Record, RecordType } from '~/types/record';
+
+import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const patient = useDocument<Patient>(patientDocRefById(route.query.id as string));
+
+console.log(route.query.id)
 
 const recordType: Ref<RecordType> = ref("")
 const initialRecordDraftState = {
@@ -71,7 +75,9 @@ const recordTypeReadable = computed(() => {
   if (recordType.value === "request-desirous-of-contraception") return "Desirous of Contraception"
 })
 
-watch(recordType, () => {
-  recordDraft.value = initialRecordDraftState;
+
+watch(recordDraft , (oldValue, newValue) => {
+  if (oldValue === newValue) return;
+  recordDraft.value = initialRecordDraftState
 })
 </script> 

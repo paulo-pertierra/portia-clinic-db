@@ -68,7 +68,6 @@
             <ion-card-title>Desirous of Contraceptive</ion-card-title>
             <ion-card-subtitle>{{ "4:00pm Tuesday, January 20, 2023" }}</ion-card-subtitle>
           </ion-card-header>
-
           <ion-card-content> Click on the card to view more details. </ion-card-content>
         </ion-card>
       </div>
