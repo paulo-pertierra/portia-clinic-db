@@ -20,7 +20,7 @@
             />
             <button
               @click="takePicture()"
-              class="absolute bottom-0 right-0 text-white text-xl bg-blue-400 rounded-full w-8 h-8 border "
+              class="absolute bottom-0 right-0 text-white text-xl bg-blue-400 rounded-full w-8 h-8 border"
             >
               <font-awesome-icon icon="fa-solid fa-pen" />
             </button>
@@ -72,7 +72,13 @@
         </ion-card>
       </div>
     </ion-content>
-    <ion-fab v-if="patientSegment === 'records'" slot="fixed" vertical="bottom" horizontal="end" @click="ionRouter.push(`/patients/record?id=${patient?.id}`)">
+    <ion-fab
+      v-if="patientSegment === 'records'"
+      slot="fixed"
+      vertical="bottom"
+      horizontal="end"
+      @click="ionRouter.push(`/patients/record?id=${patient?.id}`)"
+    >
       <ion-fab-button>
         <ion-icon :icon="ioniconsAdd"></ion-icon>
       </ion-fab-button>
@@ -99,19 +105,17 @@ const friendlyDate = useFriendlyDate();
 const defaultImage =
   "https://firebasestorage.googleapis.com/v0/b/fernandez-clinic-dev.appspot.com/o/patients%2Fdefault-patient-img.jpg?alt=media&token=048e8e71-11d3-441f-8410-9ae97404c394&_gl=1*1xso72v*_ga*NzgwMTA4NjkuMTY5NTg3ODMzMw..*_ga_CW55HF8NVT*MTY5ODU2MzEwNi4xOS4xLjE2OTg1NjYyOTQuMjYuMC4w";
 
-
 const modal = ref();
 const input = ref();
 
-const cancel = () => modal.value.$el.dismiss(null, 'cancel');
+const cancel = () => modal.value.$el.dismiss(null, "cancel");
 
 const confirm = () => {
   const name = input.value.$el.value;
-  modal.value.$el.dismiss(name, 'confirm');
+  modal.value.$el.dismiss(name, "confirm");
 };
 
-const onWillDismiss = (ev: CustomEvent<any>) => {
-};
+const onWillDismiss = (ev: CustomEvent<any>) => {};
 
 import { Camera, CameraResultType } from "@capacitor/camera";
 const takePicture = async () => {
@@ -134,6 +138,6 @@ const takePicture = async () => {
 const imageElement = ref("");
 
 watch(imageElement, () => {
-  console.log(imageElement.value)
-})
+  console.log(imageElement.value);
+});
 </script>

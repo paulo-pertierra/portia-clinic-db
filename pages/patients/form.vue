@@ -48,7 +48,7 @@
               >Birth Day:
               {{
                 patientDraft.date_of_birth
-                  ? $dayjs(patientDraft.date_of_birth as unknown as string).format("MMMM DD, YYYY")
+                  ? $dayjs(patientDraft.date_of_birth as unknown as string).format("MMM DD, YYYY")
                   : "No birthday set"
               }}</ion-label
             >
@@ -114,7 +114,7 @@
               >Date of Marriage:
               {{
                 patientDraft.date_of_marriage
-                  ? $dayjs(patientDraft.date_of_marriage).format("MMMM DD, YYYY")
+                  ? $dayjs(patientDraft.date_of_marriage).format("MMM DD, YYYY")
                   : "No date set"
               }}</ion-label
             >
@@ -357,13 +357,13 @@
       <div v-if="!patientId">
         <h5>Purpose of Visit</h5>
         <ion-item>
-        <ion-select label="Record Type" value="female" class="w-fit">
-          <ion-select-option value="desirous-of-contraceptive">Desirous of Contraceptive</ion-select-option>
-          <ion-select-option value="abnormal-menstruation">Abnormal Menstruation</ion-select-option>
-          <ion-select-option value="infertility-workup">Infertility Workup</ion-select-option>
-          <ion-select-option value="other">Other</ion-select-option>
-        </ion-select>
-      </ion-item>
+          <ion-select label="Record Type" value="female" class="w-fit">
+            <ion-select-option value="desirous-of-contraceptive">Desirous of Contraceptive</ion-select-option>
+            <ion-select-option value="abnormal-menstruation">Abnormal Menstruation</ion-select-option>
+            <ion-select-option value="infertility-workup">Infertility Workup</ion-select-option>
+            <ion-select-option value="other">Other</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
 
       <ion-button class="w-full py-8" size="medium" @click="submitPatientForm"
@@ -436,16 +436,19 @@ const updatePatientDocument = async () => {
       : "",
   };
   console.log(patientId.value);
-  await updateDoc(patientDocRefById(patientId.value), updatedPatientDoc)
-    .then(() => {
-  });
-  navigateTo(`/patients/${ patientId.value }`);
+  await updateDoc(patientDocRefById(patientId.value), updatedPatientDoc).then(() => {});
+  navigateTo(`/patients/${patientId.value}`);
 };
 
 const createPatientDocument = () => {
   const newPatientDoc = {
     ...patientDraft.value,
-    full_name: patientDraft.value.first_name + " " + patientDraft.value.middle_name + " " + patientDraft.value.last_name,
+    full_name:
+      patientDraft.value.first_name +
+      " " +
+      patientDraft.value.middle_name +
+      " " +
+      patientDraft.value.last_name,
     created_at: Timestamp.fromDate(new Date()),
     date_of_birth: patientDraft.value.date_of_birth
       ? Timestamp.fromDate(new Date(patientDraft.value.date_of_birth as unknown as string))
@@ -462,8 +465,7 @@ const createPatientDocument = () => {
 const submitPatientForm = () => {
   if (patientId.value) {
     updatePatientDocument();
-  };
+  }
   if (!patientId.value) createPatientDocument();
 };
-
 </script>

@@ -82,6 +82,6 @@ async function ionNavigateTo(link: string) {
   await menuController.close("side-menu");
   ionRouter.push(link);
 }
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { defineCustomElements } from "@ionic/pwa-elements/loader";
 defineCustomElements(window);
 </script>
