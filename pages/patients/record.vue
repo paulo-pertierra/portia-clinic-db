@@ -23,7 +23,7 @@
           <ion-select-option value="other-general-remarks">Other</ion-select-option>
         </ion-select>
       </ion-item>
-      <div v-if="recordType" class="flex">
+      <div v-if="recordType">
         <ion-item class="w-full">
           <ion-input
             v-model="recordDraft.physical!.blood_pressure"
@@ -35,7 +35,7 @@
           <ion-input v-model="recordDraft.physical!.weight" label="Weight (kg)" placeholder="50" />
         </ion-item>
       </div>
-      <div v-if="recordType === 'diagnostic-infertility-work-up'">
+      <div v-if="recordType">
         <h5>Additional Details</h5>
         <ion-item>
           <ion-select
@@ -43,12 +43,12 @@
             label="Menstruation Pattern"
             placeholder="Click Here"
           >
-            <ion-select-option :value="true">Irregular</ion-select-option>
-            <ion-select-option :value="false">Regular</ion-select-option>
+          <ion-select-option :value="true">Regular</ion-select-option>
+            <ion-select-option :value="false">Irregular</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-accordion-group>
-          <ion-accordion value="marriage-datetime-picker">
+          <ion-accordion value="menstruation-datetime-picker">
             <ion-item slot="header">
               <ion-label
                 >Date of Last Menstruation:
@@ -72,6 +72,7 @@
             </div>
           </ion-accordion>
         </ion-accordion-group>
+        <div v-if="recordType !== 'request-desirous-of-contraception'">
         <ion-item>
           <ion-select
             v-model="recordDraft.history_menstruation!.previous_menstruation!.amount_of_flow"
@@ -92,12 +93,15 @@
             Dysmenorrhea
           </ion-checkbox>
         </ion-item>
+        </div>
+      </div>
+      <div v-if="recordType">
         <h5>Chief of Complaints</h5>
         <ion-item>
           <ion-textarea rows="5" placeholder="Complaints or additional details" />
         </ion-item>
-        <h5>Patient Health Background</h5>
-        <ion-accordion-group>
+      <h5 v-if="recordType != 'request-desirous-of-contraception'">Patient Health Background</h5>
+        <ion-accordion-group v-if="recordType != 'request-desirous-of-contraception'">
           <ion-accordion>
             <ion-item slot="header">History of Present Illnesses</ion-item>
             <div class="ion-padding" slot="content">
@@ -144,14 +148,15 @@
           </ion-accordion>
         </ion-accordion-group>
       </div>
+      <ion-button class="w-full ion-padding" @click="submitRecordForm">Submit</ion-button>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
-import { Timestamp } from "firebase/firestore";
+import { Timestamp, addDoc } from "firebase/firestore";
 import { _RefFirestore } from "vuefire";
-import { patientDocRefById } from "~/services/firebase";
+import { patientDocRefById, patientRecordColRef } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 import { Record, RecordType } from "~/types/record";
 
@@ -163,6 +168,7 @@ const patient = useDocument<Patient>(patientDocRefById(route.query.id as string)
 console.log(route.query.id);
 
 const recordType: Ref<RecordType> = ref("");
+
 const initialRecordDraftState: Record = {
   type: recordType.value,
   created_at: Timestamp.fromDate(new Date()),
@@ -201,4 +207,15 @@ watch(recordDraft, (oldValue, newValue) => {
     recordDraft.value.history_present_illness!.vaginal_discharge = { present: false };
   }
 });
+
+async function submitRecordForm() {
+  await addDoc(patientRecordColRef(route.query.id as string), {
+    ...recordDraft.value,
+    patient: {
+      id: route.query.id,
+      name: patient!.value!.full_name
+    },
+    type: recordType.value
+  });
+}
 </script>

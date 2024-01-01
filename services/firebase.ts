@@ -23,24 +23,24 @@ export const analytics = getAnalytics(app);
  */
 export const patientColRef = collection(db, "patient");
 /**
- * Ito rin sa mga records, pero collectionGroup ito, kaya mag-ingat sa paggamit. Usable din sa useCollection();
+ * Ito rin sa mga record, pero collectionGroup ito, kaya mag-ingat sa paggamit. Usable din sa useCollection();
  * Nested collection ng bawat patient.
  */
-export const recordsColGrpRef = collectionGroup(db, "records");
+export const recordColGrpRef = collectionGroup(db, "record");
 
 /**
- * Queries Records of patients by their IDs.
+ * Queries Record of patients by their IDs.
  * @param patientId ID ng patient, inject mo sa patient.id
  */
-export const patientRecordColRefByPatientId = (patientId: string) =>
-  collection(db, "patient", patientId, "records");
+export const patientRecordColRef = (patientId: string) =>
+  collection(db, "patient", patientId, "record");
 
 /**
  *
  * @param patientId ID ng patient, inject mo sa patient.id
  * @param type "desirous_of_contraception", "abnormal_menstruation", "general_remarks", "infertility_workup"
  */
-export const patientRecordColRefByPatientIdAndType = (patientId: string, type: string) =>
-  query(patientRecordColRefByPatientId(patientId), where("type", "==", type));
+export const patientRecordColRefByType = (patientId: string, type: string) =>
+  query(patientRecordColRef(patientId), where("type", "==", type));
 
 export const patientDocRefById = (id: string) => doc(db, "patient", id);

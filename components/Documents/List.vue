@@ -1,9 +1,6 @@
 <template>
   <ion-item class="relative ion-activatable" :ref="patient.id">
-    <ion-thumbnail slot="start" @click="goToPatient(patient.id)">
-      <img class="rounded-full" alt="" :src="patient.image" />
-    </ion-thumbnail>
-    <ion-label @click="goToPatient(patient.id)">{{ patient.fullName }}</ion-label>
+    <ion-label @click="goToPatient(patient.id)">{{ record.patient!.name }}</ion-label>
     <ion-ripple-effect></ion-ripple-effect>
     <button :id="`patient-${patient.id}-action-sheet`">
       <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
@@ -19,6 +16,7 @@
 
 <script lang="ts" setup>
 import { UseIonRouterResult } from "~/types";
+import { Record } from "~/types/record";
 
 function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }) {
   if (event.detail.data) {
@@ -27,14 +25,7 @@ function handleActionSheetEvent(event: Event & { detail: { data: { action: strin
 }
 
 defineProps<{
-  patient: {
-    id: string;
-    lastName: string;
-    firstName: string;
-    middleName: string;
-    fullName: string;
-    image: string;
-  };
+  record: Record
 }>();
 
 const ionRouter: UseIonRouterResult = useIonRouter();

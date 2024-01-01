@@ -1,6 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 export type Record = {
+  id?: string;
   type: RecordType;
   created_at: Timestamp;
   physical?: {
@@ -30,6 +31,10 @@ export type Record = {
     contact_urination_pain?: boolean;
   };
   chief_of_complaints?: string;
+  patient?: {
+    id: string;
+    name: string;
+  }
 };
 
 export type RecordType =

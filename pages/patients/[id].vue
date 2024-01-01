@@ -63,10 +63,10 @@
       </ion-segment>
       <div class="w-full ion-padding" v-if="patientSegment === 'personal'"></div>
       <div class="w-full ion-padding" v-else>
-        <ion-card v-for="i in 2">
+        <ion-card v-for="record in records" @click="ionRouter.push(`/records/${record.id}`)">
           <ion-card-header>
-            <ion-card-title>Desirous of Contraceptive</ion-card-title>
-            <ion-card-subtitle>{{ "4:00pm Tuesday, January 20, 2023" }}</ion-card-subtitle>
+            <ion-card-title>{{ toReadableRecordType(record.type) }}</ion-card-title>
+            <ion-card-subtitle>{{ $dayjs((record.created_at as Timestamp).toDate()).format("hh:mm A, MMMM DD YYYY") }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content> Click on the card to view more details. </ion-card-content>
         </ion-card>
@@ -93,7 +93,7 @@ const ionRouter = useIonRouter();
 
 import { useRoute } from "vue-router";
 import { _RefFirestore } from "vuefire";
-import { patientDocRefById } from "~/services/firebase";
+import { patientDocRefById, patientRecordColRef } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 const route = useRoute();
 
@@ -118,6 +118,8 @@ const confirm = () => {
 const onWillDismiss = (ev: CustomEvent<any>) => {};
 
 import { Camera, CameraResultType } from "@capacitor/camera";
+import { Record, RecordType } from "~/types/record";
+import { Timestamp } from "firebase/firestore";
 const takePicture = async () => {
   const image = await Camera.getPhoto({
     quality: 50,
@@ -140,4 +142,15 @@ const imageElement = ref("");
 watch(imageElement, () => {
   console.log(imageElement.value);
 });
+
+const records = useCollection<Record>(
+  patientRecordColRef(route.params.id as string)
+)
+
+function toReadableRecordType(recordType: RecordType) {
+  if (recordType === 'diagnostic-infertility-work-up') return "Infertility Workup"
+  if (recordType === 'other-general-remarks') return "General Remarks / Misc. Records"
+  if (recordType === 'report-abnormal-menstruation') return "Abnormal Menstruation"
+  if (recordType === 'request-desirous-of-contraception') return "Desirous of Contraception"
+}
 </script>
