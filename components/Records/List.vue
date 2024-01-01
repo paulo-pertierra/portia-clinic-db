@@ -1,15 +1,19 @@
 <template>
-  <ion-item class="relative ion-activatable" :ref="patient.id">
-    <ion-label @click="goToPatient(patient.id)">{{ record.patient!.name }}</ion-label>
+  <ion-item class="relative ion-activatable" :ref="record.id" @click="goToRecord(record.id)">
     <ion-ripple-effect></ion-ripple-effect>
-    <button :id="`patient-${patient.id}-action-sheet`">
+    <ion-label>
+      <h2>{{ useReadableRecordType(record.type) }}</h2>
+      <p>{{ record.patient_name }}</p>
+      <p>{{ friendlyDate.formatFromTimestamp(record.created_at) }}</p>
+    </ion-label>
+    <button :id="`record-${record.id}-action-sheet`">
       <ion-icon :icon="ioniconsEllipsisVerticalOutline" />
     </button>
     <ion-action-sheet
-      :trigger="`patient-${patient.id}-action-sheet`"
+      :trigger="`record-${record.id}-action-sheet`"
       header="Actions"
       :buttons="patientActionSheetButtons"
-      @didDismiss="handleActionSheetEvent($event)"
+      @didDismiss="handleActionSheetEvent($event, record.id!)"
     ></ion-action-sheet>
   </ion-item>
 </template>
@@ -18,7 +22,7 @@
 import { UseIonRouterResult } from "~/types";
 import { Record } from "~/types/record";
 
-function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }) {
+function handleActionSheetEvent(event: Event & { detail: { data: { action: string } } }, id: string) {
   if (event.detail.data) {
     console.log(event.detail.data.action);
   }
@@ -29,7 +33,10 @@ defineProps<{
 }>();
 
 const ionRouter: UseIonRouterResult = useIonRouter();
-const goToPatient = (id: string) => ionRouter.push(`/patients/${id}`);
+
+const goToRecord =(id: Record["id"]) => {
+  ionRouter.push(`records/${id}`);
+}
 
 const patientActionSheetButtons = [
   {
@@ -59,4 +66,6 @@ const patientActionSheetButtons = [
     },
   },
 ];
+
+const friendlyDate = useFriendlyDate();
 </script>

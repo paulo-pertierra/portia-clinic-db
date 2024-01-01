@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { collection, collectionGroup, doc, getFirestore, where } from "firebase/firestore";
+import { collection, collectionGroup, doc, getFirestore, orderBy, where } from "firebase/firestore";
 import { query } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -17,33 +17,35 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const analytics = getAnalytics(app);
 
-// Collection and collection group references
 /**
- * Ito ang collection ng mga patients, pwedeng tawagin sa loob ng useCollection();
+ * COLLECTION REFERENCES
  */
 export const patientColRef = collection(db, "patient");
-/**
- * Ito rin sa mga record, pero collectionGroup ito, kaya mag-ingat sa paggamit. Usable din sa useCollection();
- * Nested collection ng bawat patient.
- */
 export const recordColRef = collection(db, "record");
 
 /**
- * Queries Record of patients by their IDs.
- * @param patientId ID ng patient, inject mo sa patient.id
+ * QUERY REFERENCES
  */
-export const patientRecordColRef = (patientId: string) =>
+
+export const patientRecordQueryRef = (patientId: string) =>
   query(
     recordColRef,
     where("patient_id", "==", patientId)
   );
 
-/**
- *
- * @param patientId ID ng patient, inject mo sa patient.id
- * @param type "desirous_of_contraception", "abnormal_menstruation", "general_remarks", "infertility_workup"
- */
-export const patientRecordColRefByType = (patientId: string, type: string) =>
-  query(patientRecordColRef(patientId), where("type", "==", type));
+export const orderedByDatePatientQueryRef = (direction: "asc" | "desc" = "desc") => 
+  query(
+    patientColRef,
+    orderBy("created_at", direction)
+  );
 
-export const patientDocRefById = (id: string) => doc(db, "patient", id);
+export const orderedByDateRecordQueryRef = (direction: "asc" | "desc" = "desc") =>
+  query(
+    recordColRef,
+    orderBy("created_at", direction)
+  )
+/**
+ * DOCUMENT REFERENCES  
+ */
+export const patientDocRef = (id: string) => doc(db, "patient", id);
+export const recordDocRef = (id: string) => doc(db, "record", id);

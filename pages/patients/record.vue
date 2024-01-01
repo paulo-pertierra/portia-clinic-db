@@ -93,6 +93,28 @@
             Dysmenorrhea
           </ion-checkbox>
         </ion-item>
+        <ion-item>
+          <ion-checkbox
+                v-model="recordDraft.history_present_illness!.vaginal_discharge!.present"
+                class="block w-fit py-2"
+                label-placement="end"
+                >Vaginal Discharge</ion-checkbox
+              >
+        </ion-item>
+        <div v-if="recordDraft.history_present_illness?.vaginal_discharge?.present">
+                <ion-item>
+                  <ion-input
+                    v-model="recordDraft.history_present_illness.vaginal_discharge.odor"
+                    label="Odor"
+                  ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input
+                    v-model="recordDraft.history_present_illness.vaginal_discharge.coloration"
+                    label="Color"
+                  ></ion-input>
+                </ion-item>
+              </div>
         </div>
       </div>
       <div v-if="recordType">
@@ -123,26 +145,7 @@
                 label-placement="end"
                 >Painful Urination</ion-checkbox
               >
-              <ion-checkbox
-                v-model="recordDraft.history_present_illness!.vaginal_discharge!.present"
-                class="block w-fit py-2"
-                label-placement="end"
-                >Vaginal Discharge</ion-checkbox
-              >
-              <div v-if="recordDraft.history_present_illness?.vaginal_discharge?.present">
-                <ion-item>
-                  <ion-input
-                    v-model="recordDraft.history_present_illness.vaginal_discharge.odor"
-                    label="Odor"
-                  ></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-input
-                    v-model="recordDraft.history_present_illness.vaginal_discharge.coloration"
-                    label="Color"
-                  ></ion-input>
-                </ion-item>
-              </div>
+              
               <ion-checkbox class="block w-fit py-2" label-placement="end">Bleeding on Contact</ion-checkbox>
             </div>
           </ion-accordion>
@@ -156,14 +159,14 @@
 <script lang="ts" setup>
 import { Timestamp, addDoc } from "firebase/firestore";
 import { _RefFirestore } from "vuefire";
-import { patientDocRefById, patientRecordColRef, recordColRef } from "~/services/firebase";
+import { patientDocRef, patientRecordQueryRef, recordColRef } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 import { Record, RecordType } from "~/types/record";
 
 import { useRoute } from "vue-router";
 const route = useRoute();
 
-const patient = useDocument<Patient>(patientDocRefById(route.query.id as string));
+const patient = useDocument<Patient>(patientDocRef(route.query.id as string));
 
 console.log(route.query.id);
 

@@ -31,10 +31,8 @@ export type Record = {
     contact_urination_pain?: boolean;
   };
   chief_of_complaints?: string;
-  patient?: {
-    id: string;
-    name: string;
-  }
+  patient_id: string;
+  patient_name: string;
 };
 
 export type RecordType =

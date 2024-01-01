@@ -376,7 +376,7 @@
 <script lang="ts" setup>
 import { useRoute } from "vue-router"; // Lesson learned, always import this when you want to update route, so the older instance will be refreshed. Time waster.
 import { Timestamp, addDoc, collection, setDoc, updateDoc } from "firebase/firestore";
-import { db, patientColRef, patientDocRefById } from "~/services/firebase";
+import { db, patientColRef, patientDocRef } from "~/services/firebase";
 import type { Patient } from "~/types/patient";
 
 const patientDraft: Ref<Patient> = ref({
@@ -405,7 +405,7 @@ const resetPatientForm = () => {
 
 const getPatientDocument = async () => {
   if (!patientId.value) return;
-  const { data, promise } = useDocument(patientDocRefById(patientId.value));
+  const { data, promise } = useDocument(patientDocRef(patientId.value));
   await promise.value;
   return data;
 };
@@ -436,7 +436,7 @@ const updatePatientDocument = async () => {
       : "",
   };
   console.log(patientId.value);
-  await updateDoc(patientDocRefById(patientId.value), updatedPatientDoc).then(() => {});
+  await updateDoc(patientDocRef(patientId.value), updatedPatientDoc).then(() => {});
   navigateTo(`/patients/${patientId.value}`);
 };
 

@@ -93,12 +93,12 @@ const ionRouter = useIonRouter();
 
 import { useRoute } from "vue-router";
 import { _RefFirestore } from "vuefire";
-import { patientDocRefById, patientRecordColRef } from "~/services/firebase";
+import { patientDocRef, patientRecordQueryRef } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 const route = useRoute();
 
 const patient: _RefFirestore<Patient | undefined> = useDocument(
-  patientDocRefById(route.params.id as string),
+  patientDocRef(route.params.id as string),
 ) as any;
 const friendlyDate = useFriendlyDate();
 
@@ -144,7 +144,7 @@ watch(imageElement, () => {
 });
 
 const records = useCollection<Record>(
-  patientRecordColRef(route.params.id as string)
+  patientRecordQueryRef(route.params.id as string)
 )
 
 function toReadableRecordType(recordType: RecordType) {

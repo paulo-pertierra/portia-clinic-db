@@ -38,7 +38,7 @@
               class="w-6 h-6 aspect-square flex items-center justify-center"
               :icon="ioniconsDocumentsSharp"
             />
-            <span class="pl-4">Documents</span>
+            <span class="pl-4">Records</span>
             <ion-ripple-effect></ion-ripple-effect>
           </button>
           <button
