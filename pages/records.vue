@@ -18,7 +18,7 @@
         </ion-card-header>
         <ion-card-content>
           <ion-list>
-            <div v-for="record in records">{{ record.patient.name }}</div>
+            <div v-for="record in records">{{ record }}</div>
           </ion-list>
         </ion-card-content>
       </ion-card>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { recordColGrpRef } from '~/services/firebase';
+import { recordColRef } from '~/services/firebase';
 
-const records = useCollection(recordColGrpRef)
+const records = useCollection(recordColRef)
 </script>

@@ -26,14 +26,17 @@ export const patientColRef = collection(db, "patient");
  * Ito rin sa mga record, pero collectionGroup ito, kaya mag-ingat sa paggamit. Usable din sa useCollection();
  * Nested collection ng bawat patient.
  */
-export const recordColGrpRef = collectionGroup(db, "record");
+export const recordColRef = collection(db, "record");
 
 /**
  * Queries Record of patients by their IDs.
  * @param patientId ID ng patient, inject mo sa patient.id
  */
 export const patientRecordColRef = (patientId: string) =>
-  collection(db, "patient", patientId, "record");
+  query(
+    recordColRef,
+    where("patient_id", "==", patientId)
+  );
 
 /**
  *

@@ -156,7 +156,7 @@
 <script lang="ts" setup>
 import { Timestamp, addDoc } from "firebase/firestore";
 import { _RefFirestore } from "vuefire";
-import { patientDocRefById, patientRecordColRef } from "~/services/firebase";
+import { patientDocRefById, patientRecordColRef, recordColRef } from "~/services/firebase";
 import { Patient } from "~/types/patient";
 import { Record, RecordType } from "~/types/record";
 
@@ -209,12 +209,10 @@ watch(recordDraft, (oldValue, newValue) => {
 });
 
 async function submitRecordForm() {
-  await addDoc(patientRecordColRef(route.query.id as string), {
+  await addDoc(recordColRef, {
     ...recordDraft.value,
-    patient: {
-      id: route.query.id,
-      name: patient!.value!.full_name
-    },
+    patient_id: route.query.id,
+    patient_name: patient!.value!.full_name,
     type: recordType.value
   });
 }
